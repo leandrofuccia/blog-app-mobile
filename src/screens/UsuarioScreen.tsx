@@ -1,5 +1,5 @@
 
-import { useExcluirUsuario } from '@/hooks/useExcluirUsuario';
+/*import { useExcluirUsuario } from '@/hooks/useExcluirUsuario';
 import { useUsuariosInfinite } from '@/hooks/useUsuariosInfinite';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -21,25 +21,6 @@ export default function UsuarioScreen() {
   const handleEditar = (credencialId: number, usuarioId: number) => {
     navigation.navigate('EditarUsuario', { credencialId, usuarioId });
   };
-
-  /*const handleExcluir = (id: number) => {
-    var mensagem = `Deseja excluir este ${perfil === 2 ? 'professor' : 'aluno'}`;
-    Alert.alert('Confirmar exclusão', mensagem, [
-      { text: 'Cancelar', style: 'cancel' },
-      {
-        text: 'Excluir',
-        style: 'destructive',
-        onPress: async () => {
-          try {
-            await api.delete(`/usuario/${id}`);
-            refresh();
-          } catch {
-            Alert.alert('Erro', 'Não foi possível excluir o ' + mensagem);
-          }
-        },
-      },
-    ]);
-  };*/
 
   const handleExcluir = (credencialId: number, usuarioId: number) => {
     Alert.alert(
@@ -136,5 +117,168 @@ const styles = StyleSheet.create({
     borderRadius: 28,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+});
+
+*/
+
+import { useExcluirUsuario } from '@/hooks/useExcluirUsuario';
+import { useUsuariosInfinite } from '@/hooks/useUsuariosInfinite';
+import { theme } from '@/theme/theme';
+import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import Layout from 'components/Layout';
+import Card from 'components/ui/Card';
+import Fab from 'components/ui/Fab';
+import { useEffect } from 'react';
+import {
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
+
+export default function UsuarioScreen() {
+  const navigation = useNavigation();
+  const { usuarios, fetchusuarios, refresh, loading, hasMore } = useUsuariosInfinite(10);
+  const route = useRoute();
+  const { perfil } = route.params as { perfil: number };
+  const { excluirUsuario, usuarioIdExcluindo } = useExcluirUsuario();
+
+  useEffect(() => {
+    fetchusuarios();
+  }, []);
+
+  const handleEditar = (credencialId: number, usuarioId: number) => {
+    navigation.navigate('EditarUsuario', { credencialId, usuarioId });
+  };
+
+  const handleExcluir = (credencialId: number, usuarioId: number) => {
+    Alert.alert(
+      'Confirmar exclusão',
+      'Tem certeza que deseja excluir o usuário?',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Excluir',
+          style: 'destructive',
+          onPress: async () => {
+            const sucesso = await excluirUsuario(credencialId, usuarioId);
+            if (sucesso) {
+              refresh();
+            }
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  const handleCadastrar = () => {
+    navigation.navigate('CriarUsuario');
+  };
+
+  return (
+    <Layout>
+      {/* View container normal */}
+      <View style={styles.container}>
+        <Text style={styles.title}>
+          {perfil === 2 ? 'Professores' : 'Alunos'}
+        </Text>
+
+        <FlatList
+          data={usuarios}
+          keyExtractor={(item) => item.id.toString()}
+          onEndReached={() => hasMore && fetchusuarios()}
+          onEndReachedThreshold={0.5}
+          onRefresh={refresh}
+          refreshing={loading}
+          renderItem={({ item }) => (
+            <Card>
+              <Text style={styles.nome}>{item.nome}</Text>
+              <View style={styles.actions}>
+                <TouchableOpacity
+                  style={styles.iconButton}
+                  onPress={() => handleEditar(item.credencialId!, item.id)}
+                >
+                  <MaterialIcons
+                    name="edit"
+                    size={22}
+                    color={theme.colors.primaria}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.iconButton}
+                  onPress={() => handleExcluir(item.credencialId!, item.id)}
+                >
+                  <MaterialIcons
+                    name="delete"
+                    size={22}
+                    color={theme.colors.vermelho}
+                  />
+                </TouchableOpacity>
+              </View>
+            </Card>
+          )}
+          ListFooterComponent={
+            loading ? (
+              <View style={styles.footer}>
+                <ActivityIndicator
+                  size="small"
+                  color={theme.colors.textoSecundario}
+                />
+              </View>
+            ) : !hasMore ? (
+              <View style={styles.footer}>
+                <Text style={styles.fim}>
+                  🎉 Todos os {perfil === 2 ? 'professores' : 'alunos'} carregados
+                </Text>
+              </View>
+            ) : null
+          }
+        />
+
+        {/* FAB flutuante */}
+        <Fab onPress={handleCadastrar}>
+          <MaterialIcons name="person-add" size={26} color="#fff" />
+        </Fab>
+      </View>
+    </Layout>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: theme.colors.neutroFundo,
+  },
+  title: {
+    ...theme.fonts.headerTitle,
+    color: theme.colors.primaria,
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  nome: {
+    ...theme.fonts.body,
+    color: theme.colors.textoPrincipal,
+  },
+  actions: {
+    flexDirection: 'row',
+  },
+  iconButton: {
+    padding: 6,
+    marginLeft: 8,
+  },
+  footer: {
+    paddingVertical: 16,
+    alignItems: 'center',
+  },
+  fim: {
+    ...theme.fonts.label,
+    color: theme.colors.textoSecundario,
   },
 });
