@@ -1,6 +1,6 @@
 import api from '@/services/api';
+import { showToast } from '@/utils/showToast';
 import { useState } from 'react';
-import { Alert } from 'react-native';
 
 export function useCriarPostagem() {
   const [titulo, setTitulo] = useState('');
@@ -9,7 +9,12 @@ export function useCriarPostagem() {
 
   const criarPostagem = async (usuarioid: number): Promise<boolean> => {
     if (!titulo.trim() || !conteudo.trim()) {
-      Alert.alert('Campos obrigatórios', 'Título e conteúdo são obrigatórios.');
+       showToast({
+        type: 'alert',
+        text1: 'Campos obrigatórios',
+        text2: 'Título e conteúdo são obrigatórios.',
+        duration: 7000,
+      });
       return false;
     }
 
@@ -20,10 +25,18 @@ export function useCriarPostagem() {
         conteudo,
         usuarioid,
       });
-      Alert.alert('Postagem criada com sucesso!');
+      showToast({
+        type: 'success',
+        text1: 'Postagem criada!',
+        text2: 'Sua postagem foi publicada com sucesso.',
+      });
       return true;
     } catch (err) {
-      Alert.alert('Erro', 'Falha ao criar a postagem.');
+      showToast({
+        type: 'error',
+        text1: 'Erro ao criar postagem',
+        text2: 'Tente novamente mais tarde.',
+      });
       return false;
     } finally {
       setLoading(false);

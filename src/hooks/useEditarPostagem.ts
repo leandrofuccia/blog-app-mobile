@@ -1,6 +1,6 @@
 import api from '@/services/api';
+import { showToast } from '@/utils/showToast';
 import { useState } from 'react';
-import { Alert } from 'react-native';
 
 export function useEditarPostagem(postId: number) {
   const [titulo, setTitulo] = useState('');
@@ -14,7 +14,12 @@ export function useEditarPostagem(postId: number) {
       setTitulo(response.data.titulo);
       setConteudo(response.data.conteudo);
     } catch (err) {
-      Alert.alert('Erro', 'Não foi possível carregar os dados da postagem.');
+      showToast({
+        type: 'error',
+        text1: 'Não foi possível carregar os dados da postagem',
+        text2: 'Tente novamente mais tarde.',
+      });
+    
     } finally {
       setLoading(false);
     }
@@ -22,7 +27,12 @@ export function useEditarPostagem(postId: number) {
 
   const atualizarPostagem = async () => {
     if (!titulo.trim() || !conteudo.trim()) {
-      Alert.alert('Campos obrigatórios', 'Preencha título e conteúdo.');
+      showToast({
+        type: 'alert',
+        text1: 'Campos obrigatórios',
+        text2: 'Título e conteúdo são obrigatórios.',
+        duration: 7000,
+      });
       return false;
     }
 
@@ -32,10 +42,18 @@ export function useEditarPostagem(postId: number) {
         titulo,
         conteudo,
       });
-      Alert.alert('Sucesso', 'Postagem atualizada com sucesso!');
+      showToast({
+        type: 'success',
+        text1: 'Postagem atualizada!',
+        text2: 'Sua postagem atualizada com sucesso.',
+      });
       return true;
     } catch (err) {
-      Alert.alert('Erro', 'Não foi possível atualizar a postagem.');
+      showToast({
+        type: 'error',
+        text1: 'Erro ao atualizar postagem',
+        text2: 'Tente novamente mais tarde.',
+      });
       return false;
     } finally {
       setLoading(false);

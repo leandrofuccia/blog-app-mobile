@@ -1,6 +1,6 @@
 import api from '@/services/api';
+import { showToast } from '@/utils/showToast';
 import { useState } from 'react';
-import { Alert } from 'react-native';
 
 export function useExcluirUsuario() {
   const [usuarioIdExcluindo, setUsuarioIdExcluindo] = useState<number | null>(null);
@@ -12,13 +12,26 @@ export function useExcluirUsuario() {
       if (response.status === 200) {
             const responseCredencial = await api.delete(`/credencial/${credencialId}`);
             if (responseCredencial.status === 200){
-                return true;
+              showToast({
+                type: 'success',
+                text1: 'Usuário excluido!',
+                text2: 'Usuário excluído com sucesso.',
+              });
+              return true;
             }
       }
-      Alert.alert('Erro', 'Não foi possível excluir a usuário.');
+      showToast({
+        type: 'error',
+        text1: 'Não foi possível excluir a usuário.',
+        text2: 'Tente novamente mais tarde.',
+      });
       return false;
     } catch (err) {
-      Alert.alert('Erro', 'Falha ao tentar excluir a usuaário.');
+      showToast({
+        type: 'error',
+        text1: 'Falha ao tentar excluir a usuaário.',
+        text2: 'Tente novamente mais tarde.',
+      });
       return false;
     } finally {
       setUsuarioIdExcluindo(null);

@@ -1,4 +1,3 @@
-// src/screens/AdminScreen.styles.ts
 import { theme } from '@/theme/theme';
 import { StyleSheet } from 'react-native';
 
