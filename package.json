@@ -10,7 +10,7 @@
     "lint": "expo lint",
     "update-ip": "node scripts/set-local-ip.js",
     "start": "expo start npm run update-ip && npx expo start --tunnel --clear",
-    "dev:docker": "npm run update-ip && docker-compose up --build"
+    "dev:docker": "node scripts/dev-docker.js"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
