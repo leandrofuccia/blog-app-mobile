@@ -2,9 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
@@ -37,11 +37,13 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build e Push
+      - name: Build e Push da imagem Docker
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
+          build-args: |
+            EXPO_PUBLIC_API_URL=http://0.0.0.0:3002
           tags: |
             leandrofuccia/blog-app-mobile:${{ env.TIMESTAMP }}
             leandrofuccia/blog-app-mobile:latest
