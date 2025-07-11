@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  blog-app-mobile:
+    build:
+      context: .
+    container_name: blog-app-mobile
+    image: leandrofuccia/blog-app-mobile:latest
+    ports:
+      - "19000:19000"
+      - "19001:19001"
+      - "19002:19002"
+    environment:
+      NODE_ENV: development
+       - .env
+    networks:
+      - app-network
+    restart: unless-stopped
+    # Mantém o terminal interativo
+    tty: true
+
+networks:
+  app-network:
+    driver: bridge
+    external: true
