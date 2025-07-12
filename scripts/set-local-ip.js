@@ -74,7 +74,7 @@ const path = require("path");
 function getLocalIPAddress() {
   const interfaces = os.networkInterfaces();
 
-  // Tenta encontrar uma interface Wi-Fi primeiro
+  // Tenta encontrar Wi-Fi primeiro
   const preferred = ["Wi-Fi", "WLAN", "Wireless Network Connection"];
   for (const name of preferred) {
     const iface = interfaces[name];
@@ -102,7 +102,7 @@ function getLocalIPAddress() {
 const ip = getLocalIPAddress();
 console.log(`🌐 IP detectado: ${ip}`);
 
-// Atualizar .env
+// 1️⃣ Atualizar .env
 const envPath = path.join(__dirname, "..", ".env");
 if (fs.existsSync(envPath)) {
   let env = fs.readFileSync(envPath, "utf-8");
@@ -122,10 +122,10 @@ if (fs.existsSync(envPath)) {
   fs.writeFileSync(envPath, envUpdated.join("\n"), "utf-8");
   console.log(`✅ EXPO_PUBLIC_API_URL atualizado no .env`);
 } else {
-  console.warn(`⚠️ Arquivo .env não encontrado, ignorando atualização do .env`);
+  console.warn(`⚠️ .env não encontrado, ignorando`);
 }
 
-// Atualizar docker-compose.yml
+// 2️⃣ Atualizar docker-compose.yml
 const composePath = path.join(__dirname, "..", "docker-compose.yml");
 if (fs.existsSync(composePath)) {
   let compose = fs.readFileSync(composePath, "utf-8");
@@ -136,24 +136,24 @@ if (fs.existsSync(composePath)) {
   fs.writeFileSync(composePath, composeUpdated, "utf-8");
   console.log(`✅ NEXT_PUBLIC_API_URL atualizado no docker-compose.yml`);
 } else {
-  console.warn(`⚠️ docker-compose.yml não encontrado, ignorando atualização do docker-compose.yml`);
+  console.warn(`⚠️ docker-compose.yml não encontrado, ignorando`);
 }
 
-// Atualizar src/services/api.ts
+// 3️⃣ Atualizar src/services/api.ts
 const apiPath = path.join(__dirname, "..", "src", "services", "api.ts");
 if (fs.existsSync(apiPath)) {
   let apiFile = fs.readFileSync(apiPath, "utf-8");
 
-  // Substitui apenas a parte do "http://10.0.2.2:3002"
-  const newLine = `? "http://${ip}:3002"`;
-  apiFile = apiFile.replace(
-    /const localhost =([\s\S]*?)\? "http:\/\/.*?:3002"/,
-    `const localhost =\n  Platform.OS === 'android'\n  ${newLine}`
-  );
+  const regex = /const IP_LOCAL = "http:\/\/.*?:3002";/;
+  const newLine = `const IP_LOCAL = "http://${ip}:3002";`;
 
-  fs.writeFileSync(apiPath, apiFile, "utf-8");
-  console.log(`✅ src/services/api.ts atualizado com IP http://${ip}:3002`);
+  if (regex.test(apiFile)) {
+    apiFile = apiFile.replace(regex, newLine);
+    fs.writeFileSync(apiPath, apiFile, "utf-8");
+    console.log(`✅ src/services/api.ts atualizado com IP ${ip}`);
+  } else {
+    console.warn(`⚠️ Linha const IP_LOCAL não encontrada no api.ts`);
+  }
 } else {
-  console.warn(`⚠️ src/services/api.ts não encontrado, ignorando atualização do api.ts`);
+  console.warn(`⚠️ src/services/api.ts não encontrado, ignorando`);
 }
-
