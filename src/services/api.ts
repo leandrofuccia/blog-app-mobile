@@ -34,10 +34,15 @@ function isAndroidEmulator() {
   : process.env.EXPO_PUBLIC_API_URL;
 */
 
-export const localhost =
+/*export const localhost =
   Platform.OS === 'android'
     ? "http://10.0.2.2:3002"
-    : process.env.EXPO_PUBLIC_API_URL;
+    : process.env.EXPO_PUBLIC_API_URL;*/
+
+ export const localhost = isAndroidEmulator()
+  ? "http://10.0.2.2:3002"
+  : "http://10.0.2.2:3002";
+   
 
 console.log("🌐 Base URL da API:", localhost);  
 
