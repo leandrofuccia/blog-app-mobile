@@ -30,9 +30,18 @@ export default function UsuarioScreen() {
     fetchusuarios();
   }, []);
 
-  const handleEditar = (credencialId: number, usuarioId: number) => {
+  /*const handleEditar = (credencialId: number, usuarioId: number) => {
     navigation.navigate('EditarUsuario', { credencialId, usuarioId });
+  };*/
+
+  const handleEditar = (credencialId: number, usuarioId: number) => {
+    navigation.navigate('EditarUsuario', {
+      credencialId,
+      usuarioId,
+      onGoBack: () => refresh(),
+    });
   };
+
 
   const handleExcluir = (credencialId: number, usuarioId: number) => {
     showConfirmToast({
@@ -53,8 +62,14 @@ export default function UsuarioScreen() {
     });
   };
 
-  const handleCadastrar = () => {
+  /*const handleCadastrar = () => {
     navigation.navigate('CriarUsuario');
+  };*/
+
+  const handleCadastrar = () => {
+    navigation.navigate('CriarUsuario', {
+      onGoBack: () => refresh(),
+    });
   };
 
   return (

@@ -17,6 +17,7 @@ type AuthContextType = {
   username: string | null;
   credencialId: number | null;
   usuarioId: number | null;
+  nome: string | null;
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
 };
@@ -43,14 +44,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [username, setUsername] = useState<string | null>(null);
   const [credencialId, setCredencialId] = useState<number | null>(null);
   const [usuarioId, setUsuarioId] = useState<number | null>(null);
+  const [nome, setNome] = useState<string | null>(null);
 
   const isLoggedIn = !!token;
 
-  const { usuario } = useUsuarioByCredencial(credencialId); // ✅ hook no escopo do componente
+  const { usuario } = useUsuarioByCredencial(credencialId); 
+ 
 
   useEffect(() => {
     if (usuario?.id) {
       setUsuarioId(usuario.id);
+      setNome(usuario.nome);
     }
   }, [usuario]);
 
@@ -98,12 +102,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setToken(null);
     setUsername(null);
     setCredencialId(null);
+    setNome(null);
     AsyncStorage.removeItem('token');
     delete api.defaults.headers.common['Authorization'];
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, token, username, credencialId, usuarioId, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, token, username, credencialId, usuarioId, nome, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

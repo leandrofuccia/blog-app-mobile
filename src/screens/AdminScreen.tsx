@@ -32,8 +32,15 @@ export default function AdminScreen() {
     });
   };
 
-  const handleAdd = () => {
+  /*const handleAdd = () => {
     navigation.navigate('CriarPost');
+    
+  };*/
+
+  const handleAdd = () => {
+    navigation.navigate('CriarPost', {
+      onGoBack: () => refresh(),
+    });
   };
 
   const handleDelete = (postId: number) => {

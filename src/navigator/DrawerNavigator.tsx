@@ -22,7 +22,7 @@ import UsuarioStackNavigator from './UsuarioStackNavigator';
 const Drawer = createDrawerNavigator();
 
 export default function DrawerNavigator() {
-  const { username, credencialId, isLoggedIn } = useAuth();
+  const { username, credencialId, isLoggedIn, nome } = useAuth();
   const { isProfessor } = useUsuarioByCredencial(credencialId);
 
   return (
@@ -92,7 +92,7 @@ export default function DrawerNavigator() {
                   fontSize: 16,
                 }}
               >
-                {username ? `Olá, ${username}` : 'Bem-vindo(a)'}
+                {nome ? `Olá, ${nome}` : 'Bem-vindo(a)'}
               </Text>
             </View>
 
