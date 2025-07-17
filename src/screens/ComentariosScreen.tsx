@@ -5,6 +5,7 @@ import { theme } from '@/theme/theme';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { ComentarioCard } from 'components/ComentarioCard';
 import Layout from 'components/Layout';
 import { useEffect } from 'react';
 import {
@@ -15,7 +16,8 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import { adminStyles } from './AdminScreen.styles';
+import { adminStyles } from './AdminScreen.styles'; // Certifique-se que este import está correto, se não for usado, pode remover.
+
 
 type RootStackParamList = {
   Comentarios: { postId: number };
@@ -27,7 +29,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Comentarios'>;
 export default function ComentariosScreen({ route }: Props) {
   const { postId } = route.params;
   const navigation = useNavigation();
-  const {isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuth();
 
   const {
     comentarios,
@@ -44,7 +46,7 @@ export default function ComentariosScreen({ route }: Props) {
       onGoBack: () => refresh(),
     });
   };
-  
+
   useEffect(() => {
     fetchComentarios(true);
   }, [postId]);
@@ -54,47 +56,41 @@ export default function ComentariosScreen({ route }: Props) {
       <View style={styles.container}>
         {error && <Text style={styles.error}>{error}</Text>}
 
-       <FlatList
-            data={comentarios}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-                <View style={styles.commentCard}>
-                <Text style={styles.commentAuthor}>{item.nome_autor}</Text>
-                <Text style={styles.commentContent}>{item.conteudo}</Text>
-                <Text style={styles.commentDate}>
-                    {new Date(item.datacriacao).toLocaleDateString('pt-BR')}
-                </Text>
-                </View>
-            )}
-            ListEmptyComponent={
-                !loading ? (
-                <Text style={styles.noComments}>Nenhum comentário ainda.</Text>
-                ) : null
-            }
-            onEndReached={() => {
-                if (hasMore && !loading) fetchComentarios();
-            }}
-
-            onEndReachedThreshold={0.2}
-            refreshing={loading}
-            onRefresh={refresh}
-            ListFooterComponent={
-                loading ? (
-                    <View style={{ paddingVertical: 16 }}>
-                        <ActivityIndicator size="small" color={theme.colors.secundaria} />
-                    </View>
-                    ) : !hasMore ? (
-                    <View style={{ paddingVertical: 16, alignItems: 'center' }}>
-                        <Text style={sharedStyles.footerText}>🎉 Você chegou ao fim da lista</Text>
-                    </View>
-                ) : null
-            }
+        <FlatList
+          data={comentarios}
+          keyExtractor={(item, index) => (item?.id != null ? item.id.toString() : `temp-${index}`)}
+          renderItem={({ item }) => (
+            <ComentarioCard item={item} /> // Use o novo componente ComentarioCard
+          )}
+         contentContainerStyle={styles.flatListContentContainer} 
+          ListEmptyComponent={
+            !loading ? (
+              <Text style={styles.noComments}>Nenhum comentário ainda.</Text>
+            ) : null
+          }
+          onEndReached={() => {
+            if (hasMore && !loading) fetchComentarios();
+          }}
+          onEndReachedThreshold={0.2}
+          refreshing={loading}
+          onRefresh={refresh}
+          ListFooterComponent={
+            loading ? (
+              <View style={{ paddingVertical: 16 }}>
+                <ActivityIndicator size="small" color={theme.colors.secundaria} />
+              </View>
+            ) : !hasMore ? (
+              <View style={{ paddingVertical: 16, alignItems: 'center' }}>
+                <Text style={sharedStyles.footerText}>🎉 Você chegou ao fim da lista</Text>
+              </View>
+            ) : null
+          }
         />
-        
+
         {isLoggedIn && (
-        <TouchableOpacity style={adminStyles.fab} onPress={handleAdd}>
+          <TouchableOpacity style={adminStyles.fab} onPress={handleAdd}>
             <MaterialIcons name="add" size={28} color="#fff" />
-        </TouchableOpacity>    
+          </TouchableOpacity>
         )}
       </View>
     </Layout>
@@ -112,40 +108,17 @@ const styles = StyleSheet.create({
     color: theme.colors.textoPrincipal,
     marginBottom: 16,
   },
-  commentCard: {
-    backgroundColor: theme.colors.neutroInput,
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: theme.colors.neutroBorda,
-  },
-  commentAuthor: {
-    ...theme.fonts.label,
-    color: theme.colors.primaria,
-  },
-  commentContent: {
+  error: {
     ...theme.fonts.body,
-    marginTop: 4,
-    color: theme.colors.textoPrincipal,
-  },
-  commentDate: {
-    ...theme.fonts.label,
-    fontSize: 12,
-    marginTop: 6,
-    color: theme.colors.textoSecundario,
+    textAlign: 'center',
+    color: theme.colors.vermelho,
+    marginBottom: 12,
   },
   noComments: {
     ...theme.fonts.body,
     textAlign: 'center',
     color: theme.colors.textoSecundario,
     marginVertical: 16,
-  },
-  error: {
-    ...theme.fonts.body,
-    textAlign: 'center',
-    color: theme.colors.vermelho,
-    marginBottom: 12,
   },
   addCommentButton: {
     flexDirection: 'row',
@@ -160,5 +133,8 @@ const styles = StyleSheet.create({
     ...theme.fonts.button,
     color: '#fff',
     marginLeft: 8,
+  },
+  flatListContentContainer: {
+    paddingBottom: 80, 
   },
 });
