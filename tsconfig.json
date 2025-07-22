@@ -6,6 +6,7 @@
     ],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
+    "allowImportingTsExtensions": true,
     "allowJs": true,
     "jsx": "react-native",
     "noEmit": true,
@@ -16,7 +17,8 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "types": [
-      "react-native"
+      "react-native",
+      "jest"
     ],
     "baseUrl": ".",
     "paths": {
@@ -32,7 +34,9 @@
     "**/*.ts",
     "**/*.tsx",
     "expo-env.d.ts",
-    ".expo/types/**/*.ts"
+    ".expo/types/**/*.ts",
+    "tests/**/*.ts", 
+    "tests/**/*.tsx" 
   ],
   "exclude": [
     "node_modules",

@@ -21,8 +21,8 @@ export function useCriarPostagem() {
     try {
       setLoading(true);
       await api.post('/posts', {
-        titulo,
-        conteudo,
+        titulo: titulo.trim(),
+        conteudo: conteudo.trim(),
         usuarioid,
       });
       showToast({

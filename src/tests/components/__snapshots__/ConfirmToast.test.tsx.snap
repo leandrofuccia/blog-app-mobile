@@ -1,0 +1,331 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ConfirmToast Deve renderizar corretamente com apenas text1 1`] = `
+<View
+  accessibilityLabel="Confirmação de ação"
+  accessibilityRole="alert"
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "#F0F0F0",
+      "borderLeftColor": "#FFD700",
+      "borderLeftWidth": 4,
+      "borderRadius": 8,
+      "flexDirection": "row",
+      "marginHorizontal": 8,
+      "padding": 12,
+    }
+  }
+>
+  <Icon
+    color="#FFD700"
+    name="help-circle"
+    size={24}
+    style={
+      {
+        "marginRight": 10,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "color": "#333333",
+          "fontSize": 16,
+          "fontWeight": "600",
+        }
+      }
+    >
+      Você tem certeza?
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      accessibilityLabel="Cancelar exclusão"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "marginRight": 8,
+          "opacity": 1,
+          "paddingHorizontal": 10,
+          "paddingVertical": 6,
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "color": "#666666",
+            "fontSize": 16,
+            "fontWeight": "600",
+          }
+        }
+      >
+        Cancelar
+      </Text>
+    </View>
+    <View
+      accessibilityLabel="Confirmar exclusão"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "backgroundColor": "#FF0000",
+          "borderRadius": 4,
+          "opacity": 1,
+          "paddingHorizontal": 10,
+          "paddingVertical": 6,
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "color": "#fff",
+            "fontSize": 16,
+            "fontWeight": "600",
+          }
+        }
+      >
+        Excluir
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ConfirmToast Deve renderizar corretamente com apenas text1 e text2 1`] = `
+<View
+  accessibilityLabel="Confirmação de ação"
+  accessibilityRole="alert"
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "#F0F0F0",
+      "borderLeftColor": "#FFD700",
+      "borderLeftWidth": 4,
+      "borderRadius": 8,
+      "flexDirection": "row",
+      "marginHorizontal": 8,
+      "padding": 12,
+    }
+  }
+>
+  <Icon
+    color="#FFD700"
+    name="help-circle"
+    size={24}
+    style={
+      {
+        "marginRight": 10,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "color": "#333333",
+          "fontSize": 16,
+          "fontWeight": "600",
+        }
+      }
+    >
+      Você tem certeza?
+    </Text>
+    <Text
+      style={
+        {
+          "color": "#666666",
+          "fontSize": 14,
+          "fontWeight": "400",
+          "marginTop": 2,
+        }
+      }
+    >
+      Esta ação não poderá ser desfeita.
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      accessibilityLabel="Cancelar exclusão"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "marginRight": 8,
+          "opacity": 1,
+          "paddingHorizontal": 10,
+          "paddingVertical": 6,
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "color": "#666666",
+            "fontSize": 16,
+            "fontWeight": "600",
+          }
+        }
+      >
+        Cancelar
+      </Text>
+    </View>
+    <View
+      accessibilityLabel="Confirmar exclusão"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "backgroundColor": "#FF0000",
+          "borderRadius": 4,
+          "opacity": 1,
+          "paddingHorizontal": 10,
+          "paddingVertical": 6,
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "color": "#fff",
+            "fontSize": 16,
+            "fontWeight": "600",
+          }
+        }
+      >
+        Excluir
+      </Text>
+    </View>
+  </View>
+</View>
+`;
