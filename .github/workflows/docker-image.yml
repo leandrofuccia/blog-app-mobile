@@ -25,6 +25,9 @@ jobs:
       - name: Instalar dependências
         run: npm install --legacy-peer-deps
 
+      - name: Executar testes
+        run: npm test -- -u
+
       - name: Criar timestamp
         run: echo "TIMESTAMP=$(date +%s)" >> $GITHUB_ENV
 
