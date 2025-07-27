@@ -7,7 +7,6 @@ export const sharedStyles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: theme.colors.neutroFundo,
   },
 
   // Título centralizado com destaque
@@ -63,4 +62,10 @@ export const sharedStyles = StyleSheet.create({
     fontWeight: '400',
     color: theme.colors.textoSecundario,
   },
+
+  scrollContainer: {
+  flexGrow: 1,
+  justifyContent: 'center',
+},
+
 });

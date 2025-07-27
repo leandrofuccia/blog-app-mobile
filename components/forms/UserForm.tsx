@@ -1,32 +1,33 @@
 import { theme } from '@/theme/theme';
+import KeyboardAwareScrollContainer from 'components/shared/KeyboardAwareScrollContainer';
 import React, { useState } from 'react';
 import {
-    ActivityIndicator,
-    Pressable,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-type FormFields = 'nome' | 'username' | 'password' | 'confirmPassword';
+type Fields = 'nome' | 'username' | 'password' | 'confirmPassword';
 
 interface UserFormProps {
   nome: string;
-  setNome: (nome: string) => void;
+  setNome: (value: string) => void;
   username: string;
-  setUsername: (username: string) => void;
+  setUsername: (value: string) => void;
   password: string;
-  setPassword: (password: string) => void;
+  setPassword: (value: string) => void;
   confirmPassword: string;
   setConfirmPassword: (value: string) => void;
   loading: boolean;
   onSubmit: () => Promise<void>;
-  errors: Record<string, string>;
-  handleBlur: (field: FormFields) => void;
-  handleChange: (field: FormFields) => void;
+  errors: Partial<Record<Fields, string>>;
+  handleBlur: (field: Fields) => void;
+  handleChange: (field: Fields, value: string) => void;
 }
 
 export default function UserForm({
@@ -48,97 +49,102 @@ export default function UserForm({
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
-    <View style={styles.container}>
-      {/* Nome */}
-      <TextInput
-        style={styles.input}
-        placeholder="Nome"
-        placeholderTextColor={theme.colors.textoSecundario}
-        value={nome}
-        onChangeText={(text) => {
-          setNome(text);
-          handleChange('nome');
-        }}
-        onBlur={() => handleBlur('nome')}
-      />
-      {errors.nome ? <Text style={styles.errorText}>{errors.nome}</Text> : null}
-
-      {/* Email */}
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        placeholderTextColor={theme.colors.textoSecundario}
-        value={username}
-        onChangeText={(text) => {
-          setUsername(text);
-          handleChange('username');
-        }}
-        onBlur={() => handleBlur('username')}
-        autoCapitalize="none"
-        keyboardType="email-address"
-      />
-      {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
-
-      {/* Senha */}
-      <View style={styles.passwordContainer}>
+    <KeyboardAwareScrollContainer>
+      <View style={styles.container}>
+        {/* Nome */}
         <TextInput
-          style={styles.passwordInput}
-          placeholder="Senha"
+          style={styles.input}
+          placeholder="Nome"
           placeholderTextColor={theme.colors.textoSecundario}
-          value={password}
+          value={nome}
           onChangeText={(text) => {
-            setPassword(text);
-            handleChange('password');
+            setNome(text);
+            handleChange('nome', text);
           }}
-          onBlur={() => handleBlur('password')}
-          secureTextEntry={!showPassword}
+          onBlur={() => handleBlur('nome')}
+          autoCapitalize="words"
         />
-        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-          <Icon
-            name={showPassword ? 'eye-off' : 'eye'}
-            size={22}
-            color={theme.colors.primaria}
-          />
-        </TouchableOpacity>
-      </View>
-      {errors.senha ? <Text style={styles.errorText}>{errors.senha}</Text> : null}
+        {errors.nome ? <Text style={styles.errorText}>{errors.nome}</Text> : null}
 
-      {/* Confirmar Senha */}
-      <View style={styles.passwordContainer}>
+        {/* Username / Email */}
         <TextInput
-          style={styles.passwordInput}
-          placeholder="Confirmar Senha"
+          style={styles.input}
+          placeholder="Email"
           placeholderTextColor={theme.colors.textoSecundario}
-          value={confirmPassword}
+          value={username}
           onChangeText={(text) => {
-            setConfirmPassword(text);
-            handleChange('confirmPassword');
+            setUsername(text);
+            handleChange('username', text);
           }}
-          onBlur={() => handleBlur('confirmPassword')}
-          secureTextEntry={!showConfirmPassword}
+          onBlur={() => handleBlur('username')}
+          autoCapitalize="none"
+          keyboardType="email-address"
         />
-        <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
-          <Icon
-            name={showConfirmPassword ? 'eye-off' : 'eye'}
-            size={22}
-            color={theme.colors.primaria}
-          />
-        </TouchableOpacity>
-      </View>
-      {errors.confirmSenha ? <Text style={styles.errorText}>{errors.confirmSenha}</Text> : null}
+        {errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
 
-      {loading ? (
-        <ActivityIndicator
-          size="large"
-          color={theme.colors.primaria}
-          style={{ marginTop: 16 }}
-        />
-      ) : (
-        <Pressable style={styles.button} onPress={onSubmit}>
-          <Text style={styles.buttonText}>Salvar</Text>
-        </Pressable>
-      )}
-    </View>
+        {/* Senha */}
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.passwordInput}
+            placeholder="Senha"
+            placeholderTextColor={theme.colors.textoSecundario}
+            value={password}
+            onChangeText={(text) => {
+              setPassword(text);
+              handleChange('password', text);
+            }}
+            onBlur={() => handleBlur('password')}
+            secureTextEntry={!showPassword}
+          />
+          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+            <Icon
+              name={showPassword ? 'eye-off' : 'eye'}
+              size={22}
+              color={theme.colors.primaria}
+            />
+          </TouchableOpacity>
+        </View>
+        {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
+
+        {/* Confirmar Senha */}
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.passwordInput}
+            placeholder="Confirmar Senha"
+            placeholderTextColor={theme.colors.textoSecundario}
+            value={confirmPassword}
+            onChangeText={(text) => {
+              setConfirmPassword(text);
+              handleChange('confirmPassword', text);
+            }}
+            onBlur={() => handleBlur('confirmPassword')}
+            secureTextEntry={!showConfirmPassword}
+          />
+          <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
+            <Icon
+              name={showConfirmPassword ? 'eye-off' : 'eye'}
+              size={22}
+              color={theme.colors.primaria}
+            />
+          </TouchableOpacity>
+        </View>
+        {errors.confirmPassword ? (
+          <Text style={styles.errorText}>{errors.confirmPassword}</Text>
+        ) : null}
+
+        {loading ? (
+          <ActivityIndicator
+            size="large"
+            color={theme.colors.primaria}
+            style={{ marginTop: 16 }}
+          />
+        ) : (
+          <Pressable style={styles.button} onPress={onSubmit}>
+            <Text style={styles.buttonText}>Salvar</Text>
+          </Pressable>
+        )}
+      </View>
+    </KeyboardAwareScrollContainer>
   );
 }
 

@@ -2,26 +2,25 @@ import { useEditarUsuario } from '@/hooks/useEditarUsuario';
 import { useFormValidation } from '@/hooks/useFormValidation';
 import { sharedStyles } from '@/theme/sharedStyles';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import FormContainer from 'components/FormContainer';
 import UserForm from 'components/forms/UserForm';
 import Layout from 'components/Layout';
+import KeyboardAwareScrollViewWrapper from 'components/shared/KeyboardAwareScrollContainer';
+
 import { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 
 type RootStackParamList = {
-  EditarUsuario: { credencialId: number; usuarioId: number; onGoBack?: () => void };
+  EditarUsuario: { credencialId: number; usuarioId: number; onGoBack?: () => void; perfil: number };
 };
+
 
 type Props = NativeStackScreenProps<RootStackParamList, 'EditarUsuario'>;
 
 export default function EditarUsuarioScreen({ route, navigation }: Props) {
-  const { usuarioId } = route.params;
-  const { credencialId } = route.params;;
-  const { perfil } = route.params as { perfil: number };
+  const { usuarioId, credencialId, perfil } = route.params;
   const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
-
-  console.log(' tela ', usuarioId)
-  console.log(' tela credencialId', credencialId)
 
   const {
     nome,
@@ -41,26 +40,26 @@ export default function EditarUsuarioScreen({ route, navigation }: Props) {
     carregarUsuario();
   }, [usuarioId]);
 
-   // Custom hook de validação
-    const { errors, validateAll, handleBlur, handleChange } = useFormValidation({
-      nome,
-      username,
-      password,
-     confirmPassword,
-    });
-  
+  // Hook de validação
+  const { errors, validateAll, handleBlur, handleChange } = useFormValidation({
+    nome,
+    username,
+    password,
+    confirmPassword,
+  });
+
   const handleSubmit = async () => {
     const ok = await atualizarUsuario();
     if (ok) {
-    route.params.onGoBack?.(); 
-    navigation.goBack();
-  }
-
+      route.params.onGoBack?.();
+      navigation.goBack();
+    }
   };
 
   return (
-      <Layout>
-        <View style={sharedStyles.container}>
+    <Layout>
+      <KeyboardAwareScrollViewWrapper>
+        <FormContainer>
           <Text style={sharedStyles.header}>Editar Usuário</Text>
           <UserForm
             nome={nome}
@@ -77,9 +76,8 @@ export default function EditarUsuarioScreen({ route, navigation }: Props) {
             handleBlur={handleBlur}
             handleChange={handleChange}
           />
-        </View>
-      </Layout>
-    );
-  }
-  
-  
+        </FormContainer>
+      </KeyboardAwareScrollViewWrapper>
+    </Layout>
+  );
+}

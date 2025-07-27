@@ -2,15 +2,16 @@ import { useAuth } from '@/context/AuthContext';
 import { useNovoComentario } from '@/hooks/useNovoComentario';
 import { theme } from '@/theme/theme';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import FormContainer from 'components/FormContainer';
 import Layout from 'components/Layout';
 import { useState } from 'react';
 import {
-    ActivityIndicator,
-    Pressable,
-    StyleSheet,
-    Text,
-    TextInput,
-    View
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View
 } from 'react-native';
 
 type RouteParams = {
@@ -45,6 +46,7 @@ export default function NovoComentarioScreen() {
 
   return (
     <Layout>
+      <FormContainer>
       <View style={styles.container}>
         <Text style={styles.label}>Nome do autor</Text>
         <TextInput
@@ -80,6 +82,7 @@ export default function NovoComentarioScreen() {
           )}
         </Pressable>
       </View>
+      </FormContainer>
     </Layout>
   );
 }
@@ -128,3 +131,4 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
 });
+

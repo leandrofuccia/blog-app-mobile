@@ -3,6 +3,7 @@ import { useEditarPostagem } from '@/hooks/useEditarPostagem';
 import { sharedStyles } from '@/theme/sharedStyles';
 import { theme } from '@/theme/theme';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import FormContainer from 'components/FormContainer';
 import Layout from 'components/Layout';
 import { useEffect } from 'react';
 import {
@@ -47,6 +48,7 @@ export default function EditarPostScreen({ route, navigation }: Props) {
 
   return (
     <Layout>
+      <FormContainer>
       {loading ? (
         <ActivityIndicator
           size="large"
@@ -80,6 +82,7 @@ export default function EditarPostScreen({ route, navigation }: Props) {
           </Pressable>
         </View>
       )}
+      </FormContainer>
     </Layout>
   );
 }

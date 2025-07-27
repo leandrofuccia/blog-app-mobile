@@ -3,8 +3,20 @@ import { useLogin } from '@/hooks/useLogin';
 import { showToast } from '@/utils/showToast';
 import Layout from 'components/Layout';
 import { useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather'; // <- ícone "eye" ou "eye-off"
+import {
+  ActivityIndicator,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 
 export default function LoginScreen({ navigation }: any) {
   const { isLoggedIn, logout } = useAuth();
@@ -20,85 +32,100 @@ export default function LoginScreen({ navigation }: any) {
   const onLoginPress = async () => {
     const ok = await handleLogin();
     if (ok) {
-       showToast({
-          type: 'success',
-          text1: 'Bem-vindo!',
-          text2: 'Login realizado com sucesso!'
-        });
+      showToast({
+        type: 'success',
+        text1: 'Bem-vindo!',
+        text2: 'Login realizado com sucesso!'
+      });
       navigation.goBack();
     }
   };
 
   return (
     <Layout>
-      <View style={styles.container}>
-        {isLoggedIn ? (
-          <>
-            <Text style={styles.title}>Você já está logado.</Text>
-            <TouchableOpacity style={styles.logoutButton} onPress={logout}>
-              <Text style={styles.logoutButtonText}>Sair</Text>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <>
-            <Text style={styles.title}>Login de Professor</Text>
-
-            <TextInput
-              placeholder="E-mail"
-              value={email}
-              onChangeText={setEmail}
-              style={styles.input}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              placeholderTextColor="#888"
-            />
-
-            {/* Campo com ícone de olho */}
-            <View style={styles.passwordContainer}>
-              <TextInput
-                placeholder="Senha"
-                value={password}
-                onChangeText={setPassword}
-                style={styles.passwordInput}
-                secureTextEntry={!showPassword}
-                autoCapitalize="none"
-                autoCorrect={false}
-                placeholderTextColor="#888"
-              />
-              <TouchableOpacity
-                onPress={() => setShowPassword(!showPassword)}
-                style={styles.eyeIcon}
-              >
-                <Icon
-                  name={showPassword ? 'eye-off' : 'eye'}
-                  size={20}
-                  color="#007C91"
-                />
-              </TouchableOpacity>
-            </View>
-
-            {error && <Text style={styles.error}>{error}</Text>}
-
-            <TouchableOpacity
-              style={[styles.button, loading && styles.buttonDisabled]}
-              onPress={onLoginPress}
-              disabled={loading}
-            >
-              {loading ? (
-                <ActivityIndicator color="#fff" />
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <ScrollView
+            contentContainerStyle={styles.scrollContainer}
+            keyboardShouldPersistTaps="handled"
+          >
+            <View style={styles.container}>
+              {isLoggedIn ? (
+                <>
+                  <Text style={styles.title}>Você já está logado.</Text>
+                  <TouchableOpacity style={styles.logoutButton} onPress={logout}>
+                    <Text style={styles.logoutButtonText}>Sair</Text>
+                  </TouchableOpacity>
+                </>
               ) : (
-                <Text style={styles.buttonText}>Entrar</Text>
+                <>
+                  <Text style={styles.title}>Login de Professor</Text>
+
+                  <TextInput
+                    placeholder="E-mail"
+                    value={email}
+                    onChangeText={setEmail}
+                    style={styles.input}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    placeholderTextColor="#888"
+                  />
+
+                  <View style={styles.passwordContainer}>
+                    <TextInput
+                      placeholder="Senha"
+                      value={password}
+                      onChangeText={setPassword}
+                      style={styles.passwordInput}
+                      secureTextEntry={!showPassword}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      placeholderTextColor="#888"
+                    />
+                    <TouchableOpacity
+                      onPress={() => setShowPassword(!showPassword)}
+                      style={styles.eyeIcon}
+                    >
+                      <Icon
+                        name={showPassword ? 'eye-off' : 'eye'}
+                        size={20}
+                        color="#007C91"
+                      />
+                    </TouchableOpacity>
+                  </View>
+
+                  {error && <Text style={styles.error}>{error}</Text>}
+
+                  <TouchableOpacity
+                    style={[styles.button, loading && styles.buttonDisabled]}
+                    onPress={onLoginPress}
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <ActivityIndicator color="#fff" />
+                    ) : (
+                      <Text style={styles.buttonText}>Entrar</Text>
+                    )}
+                  </TouchableOpacity>
+                </>
               )}
-            </TouchableOpacity>
-          </>
-        )}
-      </View>
+            </View>
+          </ScrollView>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </Layout>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
   container: {
     flex: 1,
     padding: 16,

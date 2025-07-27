@@ -19,17 +19,18 @@ export default function UsuarioStackNavigator() {
         headerTitleStyle: theme.fonts.headerTitle,
         }}
        >
+        
       <Stack.Screen
         name="UsuarioScreen"
         component={UsuarioScreen}
         initialParams={{ perfil: perfil }}
-        options={{ title: 'Gerenciar ' + tipoUsuario }}
+        options={{ title: 'Gerenciar ' + tipoUsuario, headerBackVisible: true }}
       />
       <Stack.Screen
         name="CriarUsuario"
         component={CriarUsuarioScreen}
         initialParams={{ perfil: perfil }}
-        options={{ title: 'Novo(a) ' + tipoUsuario }}
+        options={{ title: 'Novo(a) ' + tipoUsuario}}
       />
       <Stack.Screen
         name="EditarUsuario"

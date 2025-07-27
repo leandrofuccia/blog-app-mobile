@@ -1,7 +1,6 @@
 import { useAuth } from '@/context/AuthContext';
 import { useUsuarioByCredencial } from '@/hooks/useUsuarioByCredencial';
 import LoginScreen from '@/screens/LoginScreen';
-import TesteVisualScreen from '@/screens/TesteVisualScreen';
 
 import {
   createDrawerNavigator,
@@ -164,13 +163,6 @@ export default function DrawerNavigator() {
         }}
       />
 
-      <Drawer.Screen
-        name="TesteVisual"
-        component={TesteVisualScreen}
-        options={{
-          drawerLabel: 'Teste Visual',
-        }}
-      />
     </Drawer.Navigator>
   );
 }

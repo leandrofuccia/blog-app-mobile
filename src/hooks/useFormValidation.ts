@@ -8,11 +8,11 @@ interface Fields {
 }
 
 export function useFormValidation(fields: Fields) {
-  const [errors, setErrors] = useState({
+  const [errors, setErrors] = useState<Partial<Record<keyof Fields, string>>>({
     nome: '',
-    email: '',
-    senha: '',
-    confirmSenha: '',
+    username: '',
+    password: '',
+    confirmPassword: '',
   });
 
   const validateNome = () => {
@@ -49,9 +49,9 @@ export function useFormValidation(fields: Fields) {
 
     setErrors({
       nome: nomeErr,
-      email: emailErr,
-      senha: senhaErr,
-      confirmSenha: confirmErr,
+      username: emailErr,
+      password: senhaErr,
+      confirmPassword: confirmErr,
     });
 
     return !(nomeErr || emailErr || senhaErr || confirmErr);
@@ -64,13 +64,13 @@ export function useFormValidation(fields: Fields) {
     if (field === 'password') error = validateSenha();
     if (field === 'confirmPassword') error = validateConfirmSenha();
 
-    setErrors((prev) => ({ ...prev, [field === 'username' ? 'email' : field === 'confirmPassword' ? 'confirmSenha' : field]: error }));
+    setErrors((prev) => ({ ...prev, [field]: error }));
   };
 
   const handleChange = (field: keyof Fields) => {
     setErrors((prev) => ({
       ...prev,
-      [field === 'username' ? 'email' : field === 'confirmPassword' ? 'confirmSenha' : field]: '',
+      [field]: '',
     }));
   };
 
