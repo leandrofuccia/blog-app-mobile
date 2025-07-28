@@ -18,6 +18,7 @@ export function useInfinitePosts(limit = 10) {
       const response = await api.get(`/posts?page=${pageToFetch}&limit=${limit}`);
       const fetched = Array.isArray(response.data) ? response.data : [];
 
+      
       if (reset) {
         setPosts(fetched);
         setPage(2); // próxima página será 2

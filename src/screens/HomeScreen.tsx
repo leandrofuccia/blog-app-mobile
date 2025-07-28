@@ -1,10 +1,10 @@
 import { useInfinitePosts } from '@/hooks/useInfinitePosts';
 import { theme } from '@/theme/theme';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Layout from 'components/Layout';
 import PostItem from 'components/PostItem';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -29,6 +29,12 @@ export default function HomeScreen() {
   useEffect(() => {
     fetchPosts();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      refresh(); // carrega novamente os posts quando a tela volta ao foco
+    }, [])
+  );
 
   const filteredPosts = posts.filter((post) => {
     const titulo = post.titulo?.toLowerCase() || '';

@@ -4,11 +4,11 @@ import { useUsuariosInfinite } from '@/hooks/useUsuariosInfinite';
 import { theme } from '@/theme/theme';
 import { showConfirmToast, showToast } from '@/utils/showToast';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import Layout from 'components/Layout';
 import Card from 'components/ui/Card';
 import Fab from 'components/ui/Fab';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -30,9 +30,11 @@ export default function UsuarioScreen() {
     fetchusuarios();
   }, []);
 
-  /*const handleEditar = (credencialId: number, usuarioId: number) => {
-    navigation.navigate('EditarUsuario', { credencialId, usuarioId });
-  };*/
+  useFocusEffect(
+      useCallback(() => {
+        refresh(); // carrega novamente os posts quando a tela volta ao foco
+      }, [])
+    );
 
   const handleEditar = (credencialId: number, usuarioId: number) => {
     navigation.navigate('EditarUsuario', {
