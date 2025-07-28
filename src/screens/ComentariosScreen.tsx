@@ -7,16 +7,15 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ComentarioCard } from 'components/ComentarioCard';
 import Layout from 'components/Layout';
+import Fab from 'components/ui/Fab';
 import { useEffect } from 'react';
 import {
-    ActivityIndicator,
-    FlatList,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  View
 } from 'react-native';
-import { adminStyles } from './AdminScreen.styles'; // Certifique-se que este import está correto, se não for usado, pode remover.
 
 
 type RootStackParamList = {
@@ -88,9 +87,9 @@ export default function ComentariosScreen({ route }: Props) {
         />
 
         {isLoggedIn && (
-          <TouchableOpacity style={adminStyles.fab} onPress={handleAdd}>
-            <MaterialIcons name="add" size={28} color="#fff" />
-          </TouchableOpacity>
+          <Fab onPress={handleAdd}>
+            <MaterialIcons name="add" size={26} color="#fff" />
+          </Fab>
         )}
       </View>
     </Layout>

@@ -8,12 +8,12 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Layout from 'components/Layout';
 import PostItem from 'components/PostItem';
+import Fab from 'components/ui/Fab';
 import { useCallback } from 'react';
 import {
   ActivityIndicator,
   FlatList,
   Text,
-  TouchableOpacity,
   View
 } from 'react-native';
 import Toast from 'react-native-toast-message';
@@ -112,9 +112,10 @@ export default function AdminScreen() {
         />
       </View>
 
-      <TouchableOpacity style={adminStyles.fab} onPress={handleAdd}>
-        <MaterialIcons name="add" size={28} color="#fff" />
-      </TouchableOpacity>
+      {/* FAB flutuante */}
+      <Fab onPress={handleAdd}>
+        <MaterialIcons name="add" size={26} color="#fff" />
+      </Fab>
     </Layout>
   );
 }
