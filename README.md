@@ -75,6 +75,7 @@ Este guia orienta o usuário a instalar e executar a aplicação mobile utilizan
 3. Escolher modelo: `Pixel` com tela de 5 polegadas
 4. Selecionar **API Level 36.0** (imagem recomendada)
 5. Instalar e iniciar o dispositivo virtual
+6. Instalar o apk do Expo Go no dispositivo virtual
 
 ---
 
@@ -118,11 +119,11 @@ Abra o app **Expo Go** no emulador Android e selecione **Enter URL manually** pa
 
 ### 6. Executar aplicação em dispositivo físico Android
 
-1. Descubra o IP local da máquina:
-
+1. Instale o apk do Expo Go no dispositivo físico Android
+2. Descubra o IP local da máquina:
    - Execute `ipconfig` (Windows) ou `ifconfig` (Mac/Linux)
    - Pegue o IP da interface Wi-Fi, por exemplo: `192.168.0.140`
-2. Execute o container com a URL local:
+3. Execute o container com a URL local:
 
 ```bash
 docker run -it -e EXPO_PUBLIC_API_URL="http://192.168.0.140:3002" leandrofuccia/blog-app-mobile:latest
