@@ -57,7 +57,7 @@ export default function HomeScreen() {
 
         {error && <Text style={styles.errorText}>{error}</Text>}
 
-        {filteredPosts.length === 0 && !loading ? (
+        {filteredPosts.length === 0 && !error && !loading ? (
           <Text style={styles.emptyText}>Nenhuma postagem encontrada.</Text>
         ) : (
           <FlatList

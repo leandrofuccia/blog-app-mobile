@@ -92,11 +92,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setCredencialId(decoded.credencialId);
 
       return true;
-    } catch (err) {
-      console.error('Erro no login:', err);
-      return false;
+    } catch (err: any) {
+      if (err.response && err.response.data) {
+        const message = err.response.data.message || 'Erro inesperado.';
+        const status = err.response.status;
+        throw { message, status };
+      }
+
+      throw { message: 'Erro inesperado.', status: 500 };
     }
   };
+
 
   const logout = () => {
     setToken(null);
