@@ -59,7 +59,7 @@ export default function ComentariosScreen({ route }: Props) {
           data={comentarios}
           keyExtractor={(item, index) => (item?.id != null ? item.id.toString() : `temp-${index}`)}
           renderItem={({ item }) => (
-            <ComentarioCard item={item} /> // Use o novo componente ComentarioCard
+            <ComentarioCard item={item} />
           )}
          contentContainerStyle={styles.flatListContentContainer} 
           ListEmptyComponent={

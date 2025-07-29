@@ -32,10 +32,6 @@ export default function AdminScreen() {
     });
   };
 
-  /*const handleAdd = () => {
-    navigation.navigate('CriarPost');
-    
-  };*/
 
   const handleAdd = () => {
     navigation.navigate('CriarPost', {
@@ -112,7 +108,6 @@ export default function AdminScreen() {
         />
       </View>
 
-      {/* FAB flutuante */}
       <Fab onPress={handleAdd}>
         <MaterialIcons name="add" size={26} color="#fff" />
       </Fab>

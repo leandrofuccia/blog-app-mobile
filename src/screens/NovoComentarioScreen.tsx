@@ -23,7 +23,7 @@ export default function NovoComentarioScreen() {
   const route = useRoute();
   const { postId } = route.params as RouteParams;
 
-  const { username, credencialId, nome } = useAuth(); // se tiver auth
+  const { username, credencialId, nome } = useAuth();
   const [nomeAutor, setNomeAutor] = useState(nome ? nome : '');
   const {
       conteudo,
@@ -57,7 +57,7 @@ export default function NovoComentarioScreen() {
           placeholder="Seu nome"
           value={nomeAutor}
           onChangeText={setNomeAutor}
-          editable={!username} // desativa se estiver logado
+          editable={!username}
         />
 
         <Text style={styles.label}>Conteúdo</Text>

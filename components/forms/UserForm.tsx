@@ -51,7 +51,6 @@ export default function UserForm({
   return (
     <KeyboardAwareScrollContainer>
       <View style={styles.container}>
-        {/* Nome */}
         <TextInput
           style={styles.input}
           placeholder="Nome"
@@ -66,7 +65,6 @@ export default function UserForm({
         />
         {errors.nome ? <Text style={styles.errorText}>{errors.nome}</Text> : null}
 
-        {/* Username / Email */}
         <TextInput
           style={styles.input}
           placeholder="Email"
@@ -82,7 +80,6 @@ export default function UserForm({
         />
         {errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
 
-        {/* Senha */}
         <View style={styles.passwordContainer}>
           <TextInput
             style={styles.passwordInput}
@@ -106,7 +103,6 @@ export default function UserForm({
         </View>
         {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
 
-        {/* Confirmar Senha */}
         <View style={styles.passwordContainer}>
           <TextInput
             style={styles.passwordInput}

@@ -29,7 +29,6 @@ export function useEditarUsuario(credencialId: number, usuarioId: number) {
       setUserName(usuario.credencial?.username ?? '');
       setNome(usuario.nome ?? '');
       setPerfilid(usuario.perfilid ?? '');
-      //setPassword(usuario.credencial?.password ?? '');
     } catch (err) {
       console.error(err);
       showToast({

@@ -32,7 +32,7 @@ export default function HomeScreen() {
 
   useFocusEffect(
     useCallback(() => {
-      refresh(); // carrega novamente os posts quando a tela volta ao foco
+      refresh(); 
     }, [])
   );
 
@@ -69,7 +69,7 @@ export default function HomeScreen() {
                   titulo={item.titulo}
                   autor={item.usuario.nome}
                   conteudo={item.conteudo.length > 50 ? item.conteudo.slice(0, 50) + '...' : item.conteudo}
-                  showActions={false} // desativa ações de editar/excluir
+                  showActions={false} 
                 />
               </TouchableOpacity>
             )}

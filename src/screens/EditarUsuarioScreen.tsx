@@ -40,7 +40,6 @@ export default function EditarUsuarioScreen({ route, navigation }: Props) {
     carregarUsuario();
   }, [usuarioId]);
 
-  // Hook de validação
   const { errors, validateAll, handleBlur, handleChange } = useFormValidation({
     nome,
     username,

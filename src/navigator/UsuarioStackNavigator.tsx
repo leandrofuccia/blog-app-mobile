@@ -15,7 +15,7 @@ export default function UsuarioStackNavigator() {
   return (
     <Stack.Navigator
         screenOptions={{
-        headerTintColor: theme.colors.primaria,   // Cor do texto
+        headerTintColor: theme.colors.primaria, 
         headerTitleStyle: theme.fonts.headerTitle,
         }}
        >

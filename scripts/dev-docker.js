@@ -32,7 +32,6 @@ console.log(`✅ IP detectado: ${ip}`);
 const envPath = path.join(__dirname, "..", ".env");
 const composePath = path.join(__dirname, "..", "docker-compose.yml");
 
-// Atualiza .env
 let env = "";
 if (fs.existsSync(envPath)) {
   env = fs.readFileSync(envPath, "utf-8");
@@ -51,21 +50,20 @@ if (!foundExpo) {
   envUpdated.push(`EXPO_PUBLIC_API_URL=http://${ip}:3002`);
 }
 fs.writeFileSync(envPath, envUpdated.join("\n"), "utf-8");
-console.log(`✅ EXPO_PUBLIC_API_URL atualizado para http://${ip}:3002`);
+console.log(`EXPO_PUBLIC_API_URL atualizado para http://${ip}:3002`);
 
-// Atualiza docker-compose.yml
 let compose = fs.readFileSync(composePath, "utf-8");
 const composeUpdated = compose.replace(
   /NEXT_PUBLIC_API_URL:.*$/m,
   `NEXT_PUBLIC_API_URL: http://${ip}:3002`
 );
 fs.writeFileSync(composePath, composeUpdated, "utf-8");
-console.log(`✅ NEXT_PUBLIC_API_URL atualizado para http://${ip}:3002`);
+console.log(`NEXT_PUBLIC_API_URL atualizado para http://${ip}:3002`);
 
-console.log(`\n🔄 Baixando imagem do Docker Hub...`);
+console.log(`\n Baixando imagem do Docker Hub...`);
 execSync("docker pull leandrofuccia/blog-app-mobile:latest", { stdio: "inherit" });
 
-console.log(`\n🚀 Subindo containers...`);
+console.log(`\n Subindo containers...`);
 execSync("docker compose up -d", { stdio: "inherit" });
 
-console.log(`\n✅ Tudo pronto! Use 'docker logs -f blog-app-mobile' para ver o QR Code.`);
+console.log(`\n Tudo pronto! Use 'docker logs -f blog-app-mobile' para ver o QR Code.`);

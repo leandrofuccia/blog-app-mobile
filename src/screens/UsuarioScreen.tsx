@@ -32,7 +32,7 @@ export default function UsuarioScreen() {
 
   useFocusEffect(
       useCallback(() => {
-        refresh(); // carrega novamente os posts quando a tela volta ao foco
+        refresh();
       }, [])
     );
 
@@ -64,10 +64,6 @@ export default function UsuarioScreen() {
     });
   };
 
-  /*const handleCadastrar = () => {
-    navigation.navigate('CriarUsuario');
-  };*/
-
   const handleCadastrar = () => {
     navigation.navigate('CriarUsuario', {
       onGoBack: () => refresh(),
@@ -76,7 +72,6 @@ export default function UsuarioScreen() {
 
   return (
     <Layout>
-      {/* View container normal */}
       <View style={styles.container}>
         <Text style={styles.title}>
           {perfil === 2 ? 'Professores' : 'Alunos'}
@@ -134,7 +129,6 @@ export default function UsuarioScreen() {
           }
         />
 
-        {/* FAB flutuante */}
         <Fab onPress={handleCadastrar}>
           <MaterialIcons name="person-add" size={26} color="#fff" />
         </Fab>

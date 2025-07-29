@@ -1,15 +1,12 @@
-// src/theme/sharedStyles.ts
 import { StyleSheet } from 'react-native';
 import { theme } from './theme';
 
 export const sharedStyles = StyleSheet.create({
-  // Usado em telas para conter o conteúdo
   container: {
     flex: 1,
     padding: 16,
   },
 
-  // Título centralizado com destaque
   header: {
     ...theme.fonts.headerTitle,
     color: theme.colors.primaria,
@@ -17,7 +14,7 @@ export const sharedStyles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  // Input padrão reutilizável
+ 
   input: {
     borderWidth: 1,
     borderColor: theme.colors.neutroBorda,
@@ -29,13 +26,11 @@ export const sharedStyles = StyleSheet.create({
     color: theme.colors.textoPrincipal,
   },
 
-  // Textarea (input de múltiplas linhas)
   textarea: {
     height: 140,
     textAlignVertical: 'top',
   },
 
-  // Botão padrão com cor de destaque
   button: {
     backgroundColor: theme.colors.destaque,
     paddingVertical: 14,
@@ -49,14 +44,12 @@ export const sharedStyles = StyleSheet.create({
     color: '#fff',
   },
 
-  // Centraliza conteúdo na vertical e horizontal
   center: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
-  // Texto secundário (rodapé, dicas, etc.)
   footerText: {
     fontSize: 14,
     fontWeight: '400',

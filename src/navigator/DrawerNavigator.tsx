@@ -95,10 +95,8 @@ export default function DrawerNavigator() {
               </Text>
             </View>
 
-            {/* Início */}
             {inicioRoutes.map(makeDrawerItem)}
 
-            {/* Título do menu administrativo */}
             {adminRoutes.length > 0 && (
               <View style={{ paddingHorizontal: 16, paddingTop: 16 }}>
                 <Text
@@ -113,10 +111,8 @@ export default function DrawerNavigator() {
               </View>
             )}
 
-            {/* Itens administrativos */}
             {adminRoutes.map(makeDrawerItem)}
 
-            {/* Outros itens */}
             {outrosRoutes.map(makeDrawerItem)}
           </DrawerContentScrollView>
         );

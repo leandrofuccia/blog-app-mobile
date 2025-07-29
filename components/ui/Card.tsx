@@ -1,4 +1,3 @@
-// components/ui/Card.tsx
 import { theme } from '@/theme/theme';
 import React, { ReactNode } from 'react';
 import { StyleSheet, View, ViewStyle } from 'react-native';

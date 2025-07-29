@@ -13,7 +13,7 @@ export function useCurtidaStatus(postId: number) {
       setLoading(true);
       console.log('entrou no useCurtidaStatus')
       const res = await api.get(`/curtida/status/${postId}?usuarioid=${usuarioId}`);
-      setCurtiu(res.data.curtiu); // true ou false
+      setCurtiu(res.data.curtiu);
       console.log('useCurtidaStatus', res.data.curtiu)
       setErro(null);
     } catch (err) {

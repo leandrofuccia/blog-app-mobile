@@ -43,13 +43,13 @@ export default function PostDetailScreen({ route }: Props) {
   const navigation = useNavigation();
   const [post, setPost] = useState<Post | null>(null);
   const { isLoggedIn } = useAuth();
-  const { loading: postLoading } = usePostagemById(postId); // Renomeado para evitar conflito
+  const { loading: postLoading } = usePostagemById(postId);
 
   const { comentarioCount, erro: comentarioError } = useComentarioCount(postId);
   const { count: curtidaCount, refresh: refreshCurtidas } = useCurtidaCount(postId);
   const { curtiu, refresh: refreshStatus, setCurtiu } = useCurtidaStatus(postId);
-  const { novaCurtida, loading: novaCurtidaLoading } = useNovaCurtida(postId); // Adicionado loading
-  const { excluirCurtida, loading: excluirCurtidaLoading } = useExcluirCurtida(postId); // Adicionado loading
+  const { novaCurtida, loading: novaCurtidaLoading } = useNovaCurtida(postId); 
+  const { excluirCurtida, loading: excluirCurtidaLoading } = useExcluirCurtida(postId);
 
   useEffect(() => {
     api.get(`/posts/${postId}`)
@@ -57,11 +57,10 @@ export default function PostDetailScreen({ route }: Props) {
       .catch(() => setPost(null));
   }, [postId]);
 
-  // Use um loading consolidado para desabilitar o botão de curtir
   const isLikingOrDisliking = novaCurtidaLoading || excluirCurtidaLoading;
 
   const handleToggleCurtida = async () => {
-    if (!isLoggedIn || isLikingOrDisliking) { // Desabilita se não estiver logado ou já estiver processando
+    if (!isLoggedIn || isLikingOrDisliking) { 
       return;
     }
 
@@ -74,20 +73,16 @@ export default function PostDetailScreen({ route }: Props) {
       }
 
       if (success) {
-        setCurtiu(!curtiu); // Atualiza o estado local de curtiu
-        refreshCurtidas(); // Atualiza a contagem de curtidas
+        setCurtiu(!curtiu); 
+        refreshCurtidas(); 
       }
-      // O refreshStatus não é estritamente necessário aqui se setCurtiu já está atualizando o estado
-      // Mas pode ser útil para revalidar o status do servidor em casos mais complexos.
-      // refreshStatus(); 
+       
     } catch (err) {
       console.error('Erro ao atualizar curtida.', err);
-      // O showToast já é tratado dentro dos hooks useNovaCurtida e useExcluirCurtida,
-      // então não precisamos de um toast genérico aqui, a menos que haja um erro não tratado pelos hooks.
     }
   };
 
-  if (postLoading) { // Usar o loading específico da postagem
+  if (postLoading) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color={theme.colors.primaria} />
@@ -118,9 +113,7 @@ export default function PostDetailScreen({ route }: Props) {
         </Text>
         <Text style={styles.content}>{post.conteudo}</Text>
 
-        {/* Linha de Ações */}
         <View style={styles.actionsRow}>
-          {/* Comentários */}
           <Pressable
             style={styles.actionButton}
             onPress={() => navigation.navigate('Comentarios', { postId })}
@@ -133,12 +126,11 @@ export default function PostDetailScreen({ route }: Props) {
             <Text style={styles.actionText}>{comentarioCount ?? 0}</Text>
           </Pressable>
 
-          {/* Curtidas */}
           {isLoggedIn && (
             <Pressable
               style={styles.actionButton}
               onPress={handleToggleCurtida}
-              disabled={isLikingOrDisliking} // Desabilita o botão enquanto a requisição está em andamento
+              disabled={isLikingOrDisliking}
             >
               {isLikingOrDisliking ? (
                 <ActivityIndicator size="small" color={theme.colors.primaria} />
@@ -152,7 +144,7 @@ export default function PostDetailScreen({ route }: Props) {
               <Text style={styles.actionText}>{curtidaCount ?? 0}</Text>
             </Pressable>
           )}
-          {!isLoggedIn && ( // Exibir apenas a contagem se não estiver logado
+          {!isLoggedIn && (
             <View style={styles.actionButton}>
               <Ionicons
                 name="heart-outline"

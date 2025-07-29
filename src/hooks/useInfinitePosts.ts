@@ -21,7 +21,7 @@ export function useInfinitePosts(limit = 10) {
       
       if (reset) {
         setPosts(fetched);
-        setPage(2); // próxima página será 2
+        setPage(2);
         setHasMore(fetched.length >= limit);
       } else {
         setPosts((prev) => {

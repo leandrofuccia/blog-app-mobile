@@ -1,4 +1,3 @@
-// components/KeyboardAwareContainer.tsx
 import { ReactNode } from 'react';
 import { StyleSheet } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
