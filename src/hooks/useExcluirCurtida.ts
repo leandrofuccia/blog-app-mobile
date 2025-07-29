@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export function useExcluirCurtida(postId: number) {
     const [curtidaIdExcluida, setcurtidaIdExcluindo] = useState<number | null>(null);
-  const [loading, setLoading] = useState(false); // <--- Adicionado o estado de loading
+  const [loading, setLoading] = useState(false);
 
   const { usuarioId } = useAuth();
 
@@ -31,10 +31,10 @@ export function useExcluirCurtida(postId: number) {
       });
       return false;
     } finally {
-      setLoading(false); // <--- Define loading como false ao finalizar a requisição (sucesso ou erro)
-      setcurtidaIdExcluindo(null); // Mantido aqui caso queira sempre resetar ao final
+      setLoading(false);
+      setcurtidaIdExcluindo(null); 
     }
   };
 
-  return { excluirCurtida, curtidaIdExcluida, loading }; // <--- Retorna o estado de loading
+  return { excluirCurtida, curtidaIdExcluida, loading };
 }

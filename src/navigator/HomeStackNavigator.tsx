@@ -11,7 +11,7 @@ export default function HomeStackNavigator() {
   return (
     <Stack.Navigator
           screenOptions={{
-            headerTintColor: theme.colors.primaria,   // Cor do texto
+            headerTintColor: theme.colors.primaria, 
             headerTitleStyle: theme.fonts.headerTitle,
           }}
         >

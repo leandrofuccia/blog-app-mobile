@@ -12,7 +12,7 @@ export function useCurtidaComentarioStatus(comentarioid: number) {
     try {
       setLoading(true);
       const res = await api.get(`/curtidaComentario/status/${comentarioid}?usuarioid=${usuarioId}`);
-      setCurtiu(res.data.curtiu); // true ou false
+      setCurtiu(res.data.curtiu);
       setErro(null);
     } catch (err) {
       setErro("Erro ao verificar curtida.");

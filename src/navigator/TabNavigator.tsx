@@ -1,11 +1,7 @@
+import { Ionicons } from '@expo/vector-icons';
 import { BottomTabNavigationOptions, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-//import ExploreScreen from '../screens/ExploreScreen';
-import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
-
-//import MiniListScreen from '../screens/MiniListScreen';
-
 
 const Tab = createBottomTabNavigator();
 

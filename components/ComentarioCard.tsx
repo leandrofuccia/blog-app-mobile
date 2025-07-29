@@ -28,24 +28,21 @@ export function ComentarioCard({ item }: ComentarioCardProps) {
 
   const handleLike = async () => {
     if (!isLoggedIn) {
-      // Opcional: Navegar para a tela de login ou exibir um toast informando que precisa estar logado
       console.log('Usuário não logado, não pode curtir/descurtir.');
       return;
     }
 
     if (curtiu) {
-      // Descurtir
       const success = await excluirCurtidaComentario(item.id);
       if (success) {
         setCurtiu(false);
-        refreshCount(); // Atualiza a contagem de curtidas
+        refreshCount();
       }
     } else {
-      // Curtir
       const success = await novaCurtidaComentario(item.id);
       if (success) {
         setCurtiu(true);
-        refreshCount(); // Atualiza a contagem de curtidas
+        refreshCount();
       }
     }
   };
@@ -65,7 +62,7 @@ export function ComentarioCard({ item }: ComentarioCardProps) {
           <TouchableOpacity
             onPress={handleLike}
             style={styles.likeButton}
-            disabled={isLoading} // Desabilita o botão enquanto as requisições estão em andamento
+            disabled={isLoading}
           >
             {isLoading ? (
               <ActivityIndicator size="small" color={theme.colors.primaria} />
@@ -81,7 +78,7 @@ export function ComentarioCard({ item }: ComentarioCardProps) {
             )}
           </TouchableOpacity>
         )}
-        {!isLoggedIn && ( // Exibe apenas a contagem se não estiver logado
+        {!isLoggedIn && (
           <View style={styles.likeButton}>
             <MaterialIcons
               name="favorite-border"

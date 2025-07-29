@@ -1,15 +1,12 @@
-// src/tests/hooks/useCriarPostagem.test.ts
-import { act, renderHook } from '@testing-library/react-hooks'; // Importe waitFor também
+import { act, renderHook } from '@testing-library/react-hooks';
 import { useCriarPostagem } from '../../hooks/useCriarPostagem';
 import api from '../../services/api';
 import { showToast } from '../../utils/showToast';
 
-// Mock do módulo api (axios)
-jest.mock('../../services/api'); // Caminho direto se api.ts está no root de services
+jest.mock('../../services/api');
 const mockedApi = api as jest.Mocked<typeof api>;
 
-// Mock da função showToast
-jest.mock('../../utils/showToast', () => ({ // Caminho direto se utils está no root
+jest.mock('../../utils/showToast', () => ({ 
   showToast: jest.fn(),
 }));
 const mockedShowToast = showToast as jest.MockedFunction<typeof showToast>;
@@ -18,15 +15,14 @@ describe('useCriarPostagem', () => {
   beforeEach(() => {
     mockedApi.post.mockClear();
     mockedShowToast.mockClear();
-    jest.useFakeTimers(); // Habilita a simulação de timers
+    jest.useFakeTimers();
   });
 
   afterEach(async () => {
-    // Garante que todos os timers pendentes sejam executados e acts concluídos
     await act(async () => {
-      jest.runAllTimers(); // Garante que todas as timers (incluindo timeouts e intervals) sejam executadas
+      jest.runAllTimers();
     });
-    jest.useRealTimers(); // Volta a usar os timers reais
+    jest.useRealTimers(); 
   });
 
   it('deve inicializar com título e conteúdo vazios e carregar como falso', () => {
@@ -36,7 +32,6 @@ describe('useCriarPostagem', () => {
     expect(result.current.loading).toBe(false);
   });
 
-  // --- Testes de validação (onde loading não deve ser true) ---
   it('deve mostrar uma notificação e retornar falso se o título estiver vazio', async () => {
     const { result } = renderHook(() => useCriarPostagem());
     act(() => {
@@ -78,8 +73,6 @@ describe('useCriarPostagem', () => {
     expect(mockedApi.post).not.toHaveBeenCalled();
     expect(result.current.loading).toBe(false);
   });
-
-  // --- Testes onde loading deve ser true durante a operação assíncrona ---
 
   it('deve criar uma postagem, mostrar uma notificação de sucesso e retornar verdadeiro em caso de sucesso', async () => {
     const userId = 1;

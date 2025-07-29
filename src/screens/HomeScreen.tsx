@@ -1,10 +1,10 @@
 import { useInfinitePosts } from '@/hooks/useInfinitePosts';
 import { theme } from '@/theme/theme';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Layout from 'components/Layout';
 import PostItem from 'components/PostItem';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -30,6 +30,12 @@ export default function HomeScreen() {
     fetchPosts();
   }, []);
 
+  useFocusEffect(
+    useCallback(() => {
+      refresh(); 
+    }, [])
+  );
+
   const filteredPosts = posts.filter((post) => {
     const titulo = post.titulo?.toLowerCase() || '';
     const conteudo = post.conteudo?.toLowerCase() || '';
@@ -51,7 +57,7 @@ export default function HomeScreen() {
 
         {error && <Text style={styles.errorText}>{error}</Text>}
 
-        {filteredPosts.length === 0 && !loading ? (
+        {filteredPosts.length === 0 && !error && !loading ? (
           <Text style={styles.emptyText}>Nenhuma postagem encontrada.</Text>
         ) : (
           <FlatList
@@ -63,7 +69,7 @@ export default function HomeScreen() {
                   titulo={item.titulo}
                   autor={item.usuario.nome}
                   conteudo={item.conteudo.length > 50 ? item.conteudo.slice(0, 50) + '...' : item.conteudo}
-                  showActions={false} // desativa ações de editar/excluir
+                  showActions={false} 
                 />
               </TouchableOpacity>
             )}

@@ -20,14 +20,11 @@ export function useNovaCurtidaComentario(comentarioid: any) {
 
       return true;
     } catch (err) {
-      // Tipar o erro como AxiosError para acessar as propriedades de resposta
       const error = err as AxiosError; 
 
       let errorMessage = 'Erro ao curtir postagem. Tente novamente mais tarde.';
 
-      // Verificar se o erro é uma resposta do Axios e se tem uma mensagem no data
       if (axios.isAxiosError(error) && error.response && error.response.data) {
-        // Acessar a mensagem específica do backend
         if (typeof error.response.data === 'object' && 'message' in error.response.data) {
           errorMessage = (error.response.data as { message: string }).message;
         }
@@ -35,7 +32,7 @@ export function useNovaCurtidaComentario(comentarioid: any) {
       showToast({
         type: 'error',
         text1: 'Erro ao curtir postagem',
-        text2: errorMessage, // Exibir a mensagem do backend ou a mensagem padrão
+        text2: errorMessage,
       });
       return false;
     } finally {

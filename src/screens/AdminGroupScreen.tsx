@@ -11,10 +11,10 @@ export default function AdminGroupScreen() {
       screenOptions={{
         drawerType: 'front',
         headerStyle: {
-          backgroundColor: theme.colors.neutroFundo, // fundo claro
+          backgroundColor: theme.colors.neutroFundo,
         },
-        headerTintColor: theme.colors.primaria,      // texto verde
-        headerTitleStyle: theme.fonts.headerTitle,   // fonte padronizada
+        headerTintColor: theme.colors.primaria,      
+        headerTitleStyle: theme.fonts.headerTitle,
         drawerActiveTintColor: theme.colors.primaria,
         drawerLabelStyle: {
           fontSize: 15,

@@ -4,11 +4,11 @@ import { useUsuariosInfinite } from '@/hooks/useUsuariosInfinite';
 import { theme } from '@/theme/theme';
 import { showConfirmToast, showToast } from '@/utils/showToast';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import Layout from 'components/Layout';
 import Card from 'components/ui/Card';
 import Fab from 'components/ui/Fab';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -30,9 +30,11 @@ export default function UsuarioScreen() {
     fetchusuarios();
   }, []);
 
-  /*const handleEditar = (credencialId: number, usuarioId: number) => {
-    navigation.navigate('EditarUsuario', { credencialId, usuarioId });
-  };*/
+  useFocusEffect(
+      useCallback(() => {
+        refresh();
+      }, [])
+    );
 
   const handleEditar = (credencialId: number, usuarioId: number) => {
     navigation.navigate('EditarUsuario', {
@@ -62,10 +64,6 @@ export default function UsuarioScreen() {
     });
   };
 
-  /*const handleCadastrar = () => {
-    navigation.navigate('CriarUsuario');
-  };*/
-
   const handleCadastrar = () => {
     navigation.navigate('CriarUsuario', {
       onGoBack: () => refresh(),
@@ -74,7 +72,6 @@ export default function UsuarioScreen() {
 
   return (
     <Layout>
-      {/* View container normal */}
       <View style={styles.container}>
         <Text style={styles.title}>
           {perfil === 2 ? 'Professores' : 'Alunos'}
@@ -132,7 +129,6 @@ export default function UsuarioScreen() {
           }
         />
 
-        {/* FAB flutuante */}
         <Fab onPress={handleCadastrar}>
           <MaterialIcons name="person-add" size={26} color="#fff" />
         </Fab>

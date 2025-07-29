@@ -24,11 +24,11 @@ export default function KeyboardAwareScrollViewWrapper({ children }: Props) {
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
-    justifyContent: 'flex-start', // 👈 alinha no topo
+    justifyContent: 'flex-start',
     paddingHorizontal: 16,
     paddingVertical: 24,
   },
   innerContainer: {
-    flex: 0, // 👈 importante: evita que o conteúdo estique
+    flex: 0, 
   },
 });

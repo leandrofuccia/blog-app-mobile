@@ -19,7 +19,7 @@ export function useInfiniteComentarioByPostagem(limit = 10, postagemId: number |
 
   const fetchComentarios = async (reset = false) => {
     if (!postagemId) return;
-    if (loading) return; // Evita múltiplas requisições simultâneas
+    if (loading) return; 
 
     try {
       setLoading(true);
@@ -44,23 +44,20 @@ export function useInfiniteComentarioByPostagem(limit = 10, postagemId: number |
       if (reset) {
         setComentarios(fetched);
         setPage(2);
-        // Se a quantidade de itens buscados é menor que o limite, não há mais dados.
         setHasMore(fetched.length === limit); 
       } else {
         setComentarios((prev) => {
           const merged = [...prev, ...fetched];
-          // Garante que não haja duplicatas ao adicionar novos itens
           const unique = Array.from(new Map(merged.map((c) => [c.id, c])).values());
           return unique;
         });
         setPage((prev) => prev + 1);
-        // Se a quantidade de itens buscados é menor que o limite, não há mais dados.
         setHasMore(fetched.length === limit);
       }
 
       setError(null);
     } catch (err) {
-      console.error("Erro em fetchComentarios:", err); // Log para depuração
+      console.error("Erro em fetchComentarios:", err);
       setError('Erro ao carregar comentários.');
     } finally {
       setLoading(false);
@@ -68,9 +65,9 @@ export function useInfiniteComentarioByPostagem(limit = 10, postagemId: number |
   };
 
   const refresh = () => {
-    setHasMore(true); // Reseta para true ao refrescar para tentar buscar a primeira página
+    setHasMore(true);
     setPage(1);
-    fetchComentarios(true); // Chama com reset = true para recarregar do início
+    fetchComentarios(true);
   };
 
   return { comentarios, fetchComentarios, refresh, loading, hasMore, error };
